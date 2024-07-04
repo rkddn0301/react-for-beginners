@@ -1,2 +1,2 @@
 
-* 
+* PropTypes 설치 : npm i prop-types
