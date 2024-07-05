@@ -2,48 +2,32 @@ import Button from "./Button";
 import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 
-function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-
-  // 새로고침 시에만 useEffect 실행.
-  useEffect(() => {
-    console.log("I run only once.");
+// useEffect Cleanup 방식 2가지
+// Hello가 등장할 땐 Hi를, 숨길 땐 return 기능을 통해 이 함수가 끝났다고 useEffect로 알림
+// 많이 중요한 내용은 아님
+function Hello() {
+  useEffect(function () {
+    console.log("hi :)");
+    return function () {
+      console.log("bye :(");
+    };
   }, []);
 
-  // counter에 변화가 있을 경우 실행.
   useEffect(() => {
-    if (counter !== "") {
-      console.log("I run when 'counter' changes.");
-    }
-  }, [counter]);
+    console.log("hi :)");
+    return () => console.log("bye :(");
+  }, []);
+  return <h1>Hello</h1>;
+}
 
-  // keyword에 변화가 있고, keyword가 없지 않거나, keyword의 길이가 5 이상일 경우에만 useEffect 실행.
-  useEffect(() => {
-    if (keyword !== "" && keyword.length > 5) {
-      console.log("I run when 'keyword' changes.");
-    }
-  }, [keyword]);
-
-  // counter 혹은 keyword에 변화가 있을 경우 실행.
-  useEffect(() => {
-    if (counter !== "" && keyword !== "") {
-      console.log("I run when 'counter' & 'keyword' changes.");
-    }
-  }, [counter, keyword]);
+function App() {
+  const [switching, setSwitching] = useState(true);
+  const onClick = () => setSwitching((prev) => !prev);
 
   return (
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here..."
-      />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>click me</button>
+      {switching ? <Hello /> : null}
+      <button onClick={onClick}>{switching ? "Show" : "Hide"}</button>
     </div>
   );
 }
