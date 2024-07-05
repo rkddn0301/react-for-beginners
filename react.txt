@@ -1,2 +1,18 @@
 
 * PropTypes 설치 : npm i prop-types
+
+* useEffect([함수], [{조건}]) : 조건에 맞을 경우에만 함수를 실행시켜주는 훅
+EX) 
+    console.log("i run all the time");
+
+    const iRunOnlyOnce = () => {
+        console.log("i run only once.");
+    };
+    useEffect(iRunOnlyOnce, []);
+
+--> useEffect에 해당하지 않는 `console.log("i run all the time")`의 경우 
+onClick과 같은 리렌더링 발생 시 계속 실행되지만 `iRunOnlyOnce`는 useEffect의 조건에
+해당 할 때만 실행됨.
+
+--> 기본적으로 조건은 생략이 가능하며, 생략 시에는 새로고침 할 때마다 실행됨.
+--> 조건을 넣었을 때는 그 조건에 값이 변화가 있을 경우 실행됨.
