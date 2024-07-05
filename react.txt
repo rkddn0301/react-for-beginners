@@ -9,6 +9,9 @@ EX)
         console.log("i run only once.");
     };
     useEffect(iRunOnlyOnce, []);
+    useEffect(() => {
+        console.log("SEARCH FOR", keyword);
+    }, [keyword]);
 
 --> useEffect에 해당하지 않는 `console.log("i run all the time")`의 경우 
 onClick과 같은 리렌더링 발생 시 계속 실행되지만 `iRunOnlyOnce`는 useEffect의 조건에
