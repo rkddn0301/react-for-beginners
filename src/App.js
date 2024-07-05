@@ -2,32 +2,38 @@ import Button from "./Button";
 import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 
-// useEffect Cleanup 방식 2가지
-// Hello가 등장할 땐 Hi를, 숨길 땐 return 기능을 통해 이 함수가 끝났다고 useEffect로 알림
-// 많이 중요한 내용은 아님
-function Hello() {
-  useEffect(function () {
-    console.log("hi :)");
-    return function () {
-      console.log("bye :(");
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("hi :)");
-    return () => console.log("bye :(");
-  }, []);
-  return <h1>Hello</h1>;
-}
-
 function App() {
-  const [switching, setSwitching] = useState(true);
-  const onClick = () => setSwitching((prev) => !prev);
+  const [toDo, setTodo] = useState(0);
+  const [toDos, setToDos] = useState([]);
+
+  const onChange = (event) => setTodo(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    // ...Array : 현재 가지고 있는 전체 배열 값을 의미.
+    // currentArray 매개변수에 작성된 toDo를 currentArray 배열에 넣는다는 의미.
+    setToDos((currentArray) => [toDo, ...currentArray]);
+
+    setTodo("");
+  };
+  useEffect(() => {
+    console.log(toDos);
+  }, [toDos]);
 
   return (
     <div>
-      {switching ? <Hello /> : null}
-      <button onClick={onClick}>{switching ? "Show" : "Hide"}</button>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          value={toDo}
+          onChange={onChange}
+          type="text"
+          placeholder="Write your to do..."
+        />
+        <button>Add To Do</button>
+      </form>
     </div>
   );
 }
