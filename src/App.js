@@ -18,6 +18,8 @@ function App() {
 
     setTodo("");
   };
+
+  // toDO 작성 시 배열인 toDos에 반영될 때마다 console.log 발생
   useEffect(() => {
     console.log(toDos);
   }, [toDos]);
@@ -34,6 +36,16 @@ function App() {
         />
         <button>Add To Do</button>
       </form>
+      {/* array.map((value, key)) : 하나의 array(toDos)에 있는 value을 내가 원하는 무엇이든지로 바꿔줌. 
+                  array에 개수만큼 반복출력해줌.*/}
+      {/* map의 인자 중에 value은 array의 대체변수이고, key는 map에서 출력할 때 필요한 순서라고 보면된다. */}
+      {/* map은 보통 `key: value` 출력 방식인데 react에서 value만 출력하면 key가 없는거라 list 형식으로
+      인식하여 출력은 되지만 오류가 발생한다. 따라서 key도 지정해주는 것이 좋다. */}
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
