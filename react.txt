@@ -1,7 +1,7 @@
 
 * PropTypes 설치 : npm i prop-types
 
-* useEffect([함수], [{조건}]) : 조건에 맞을 경우에만 함수를 실행시켜주는 훅
+* @Hook useEffect([함수], [{조건}]) : 조건에 맞을 경우에만 함수를 실행시켜주는 훅
 EX) 
     console.log("i run all the time");
 
@@ -20,14 +20,14 @@ onClick과 같은 리렌더링 발생 시 계속 실행되지만 `iRunOnlyOnce`�
 --> 기본적으로 조건은 생략이 가능하며, 생략 시에는 새로고침 할 때마다 실행됨.
 --> 조건을 넣었을 때는 그 조건에 값이 변화가 있을 경우 실행됨.
 
-* ...Array : 현재 가지고 있는 전체 배열 값을 의미.
+* @스프레드연산자 ...Array : 현재 가지고 있는 전체 배열 값을 의미.
 EX)
 const [toDo, setTodo] = useState(0); 
 const [toDos, setToDos] = useState([]);
 setToDos((currentArray) => [toDo, ...currentArray]);
 --> currentArray 매개변수에 작성된 toDo를 currentArray 배열에 넣는다는 의미. 
 
-* array.map((value, key)) : 하나의 array(toDos)에 있는 개수만큼 반복출력하며, value를 내가 원하는 무엇이든지로 바꿔줌. 
+* @배열메서드 array.map((value, key)) : 하나의 array(toDos)에 있는 개수만큼 반복출력하며, value를 내가 원하는 무엇이든지로 바꿔줌. 
 - map의 인자 중에 value은 array의 대체변수이고, key는 map에서 출력할 때 필요한 순서라고 보면된다.
 - map은 보통 `key: value` 출력 방식인데 react에서 value만 출력하면 key가 없는거라 list 형식으로
 인식하여 출력은 되지만 오류가 발생한다. 따라서 key도 지정해주는 것이 좋다.
@@ -38,13 +38,13 @@ EX)
         ))}
       </ul>
 
-* fetch("사이트") : 해당 사이트 네트워크에 리소스를 요청하여 사이트 내에 있는 값을 응답해주는 메소드.
+* @비동기함수 fetch("사이트") : 해당 사이트 네트워크에 리소스를 요청하여 사이트 내에 있는 값을 응답해주는 메소드.
 - Promise : JavaScript에서 비동기 처리를 할 때 사용되는 객체이다.
  > Pending(대기) : 비동기 선언만 한 후 아직 완료되지 않은 상태
  > Fulfilled(이행) : 비동기 처리가 완료되어 Promise가 결과 값을 반환해준 상태 (Promise 인자 : resolve)
  > Rejected(실패) : 비동기 처리가 실패하거나 오류가 발생한 상태 (Promise 인자 : reject)
 
-- then() : fetch가 원하는 사이트를 Promise로 응답받았을 경우 어떤 행동을 할 건지 서술 할 옵션
+- @메서드 then() : fetch가 원하는 사이트를 Promise로 응답받았을 경우 어떤 행동을 할 건지 서술 할 옵션
 
 EX) 
 const [loading, setLoading] = useState(true);
@@ -63,4 +63,42 @@ const [coins, setCoins] = useState([]);
 --> 외부에서 가져온 것이기 때문에 `response.json()`을 통해 JavaScript 객체에 맞게 변환한다.
 --> `response.json()`으로 가져온 값을 `Promise`라고 한다.
 
+* @비동기함수 async-await : JavaScript에서 비동기 작업을 더 쉽게 작성하고 읽기 쉽게 만들어주는 키워드.
+- async : Promise를 반환해줌.
+- await : Promise가 해결될 떄까지 함수 실행을 일시 중지하고, 해결된 값을 반환해줌.
 
+EX) async-await 코드(아래 fetch 코드와 비교)
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+
+  const getMovies = async () => {
+    const response = await fetch(
+      `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`
+    );
+    console.log(response);
+    const json = await response.json();
+    console.log(json);
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getMovies();
+  }, []);
+--> async를 통해 `getMovies`가 비동기 함수라는 것을 알림.
+--> await를 통해 함수를 중지하여 해당 변수(`response`, `json`)에 Promise 값을 삽입함.
+
+EX) fetch 코드 비교용
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+      fetch(
+        `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`
+      ).then((response) => {
+        response.json().then((json) => {
+          setMovies(json.data.movies);
+          setLoading(false);
+          console.log(json);
+        });
+      });
+    }, []);
