@@ -1,4 +1,6 @@
 
+검색(Ctrl+F) : @Hook, @스프레드연산자, @메서드, @함수
+
 * PropTypes 설치 : npm i prop-types
 * React-Router 설치 : npm i react-router-dom
 
@@ -103,3 +105,28 @@ EX) fetch 코드 비교용
         });
       });
     }, []);
+
+* React-Router-Dom : React에서 라우팅 기능을 제공하는 라이브러리이며, 
+URL 경로에 따라 다른 컴포넌트를 렌더링 할 수 있게 해줌.
+
+! 5.3.0버전 기준 컴포넌트
+ - BrowserRouter : 라우팅 기능을 제공하는 컴포넌트
+ - Switch : `Route`에서 지정된 경로 접속 시 렌더링되는 컴포넌트
+ - Route : 특정 경로와 일치할 때 렌더링할 컴포넌트를 정의하는 컴포넌트
+ - Link : 클릭 시 특정 경로로 이동해주는 컴포넌트.
+ EX) 
+ function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/movie">
+          <Detail />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
+--> Route 경로 중 "/movie"를 접속하면 컴포넌트가 Detail인 Switch를 렌더링하는 것.
