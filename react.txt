@@ -1,5 +1,6 @@
 
 * PropTypes 설치 : npm i prop-types
+* React-Router 설치 : npm i react-router-dom
 
 * @Hook useEffect([함수], [{조건}]) : 조건에 맞을 경우에만 함수를 실행시켜주는 훅
 EX) 
