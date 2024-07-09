@@ -19,3 +19,48 @@ onClick과 같은 리렌더링 발생 시 계속 실행되지만 `iRunOnlyOnce`�
 
 --> 기본적으로 조건은 생략이 가능하며, 생략 시에는 새로고침 할 때마다 실행됨.
 --> 조건을 넣었을 때는 그 조건에 값이 변화가 있을 경우 실행됨.
+
+* ...Array : 현재 가지고 있는 전체 배열 값을 의미.
+EX)
+const [toDo, setTodo] = useState(0); 
+const [toDos, setToDos] = useState([]);
+setToDos((currentArray) => [toDo, ...currentArray]);
+--> currentArray 매개변수에 작성된 toDo를 currentArray 배열에 넣는다는 의미. 
+
+* array.map((value, key)) : 하나의 array(toDos)에 있는 개수만큼 반복출력하며, value를 내가 원하는 무엇이든지로 바꿔줌. 
+- map의 인자 중에 value은 array의 대체변수이고, key는 map에서 출력할 때 필요한 순서라고 보면된다.
+- map은 보통 `key: value` 출력 방식인데 react에서 value만 출력하면 key가 없는거라 list 형식으로
+인식하여 출력은 되지만 오류가 발생한다. 따라서 key도 지정해주는 것이 좋다.
+EX) 
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+
+* fetch("사이트") : 해당 사이트 네트워크에 리소스를 요청하여 사이트 내에 있는 값을 응답해주는 메소드.
+- Promise : JavaScript에서 비동기 처리를 할 때 사용되는 객체이다.
+ > Pending(대기) : 비동기 선언만 한 후 아직 완료되지 않은 상태
+ > Fulfilled(이행) : 비동기 처리가 완료되어 Promise가 결과 값을 반환해준 상태 (Promise 인자 : resolve)
+ > Rejected(실패) : 비동기 처리가 실패하거나 오류가 발생한 상태 (Promise 인자 : reject)
+
+- then() : fetch가 원하는 사이트를 Promise로 응답받았을 경우 어떤 행동을 할 건지 서술 할 옵션
+
+EX) 
+const [loading, setLoading] = useState(true);
+const [coins, setCoins] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://api.coinpaprika.com/v1/tickers`)
+    .then((response) => {response.json()
+    .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+    });
+  }, []);
+--> response의 경우 fetch에서 응답받은 값을 의미한다.
+--> 외부에서 가져온 것이기 때문에 `response.json()`을 통해 JavaScript 객체에 맞게 변환한다.
+--> `response.json()`으로 가져온 값을 `Promise`라고 한다.
+
+
