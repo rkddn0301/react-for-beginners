@@ -1,8 +1,54 @@
 
-검색(Ctrl+F) : @Hook, @스프레드연산자, @메서드, @함수
+검색(Ctrl+F) : @Hook, @스프레드연산자, @메서드, @함수, @변수
 
 * PropTypes 설치 : npm i prop-types
 * React-Router 설치 : npm i react-router-dom
+
+- React Hooks : 함수형 컴포넌트에서 상태 관리와 생명주기 메서드 등을 사용할 수 있게 해주는 함수들.
+EX) useEffect, useState 등
+
+
+* @Hook state : 데이터가 저장되는 곳
+  - useState(초기값) : 일반 변수와 변경 할 변수를 별도로 생성하여 데이터를 저장하는 함수
+  EX) 
+  function App() {
+    const [counter, setCounter] = React.useState(0);
+
+    const countUp = () => {
+      // setCounter(counter + 1);
+      setCounter((current) => current + 1);
+    };
+
+    return (
+      <div>
+        <h3>Total Clicks: {counter}</h3>
+        <button onClick={countUp}>click me!</button>
+      </div>
+    );
+  }
+  --> counter를 일반 변수, setCounter를 변경하는 변수로 useState를 생성하여 h3 태그에 리렌더링.
+  --> setCounter(counter + 1) : 이 방식은 겉으로 보기에 단순해서 좋으나 나중에 구분하기 어려울 수 있음.
+  --> setCounter((current) => current + 1) : 이 방식이 현재의 값에서 `+1` 한다는 의미로 보는 것과 값이 변경될 때 구분하기 쉬움.
+
+* @변수 props : 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방식
+  EX) 
+  function Btn(props) {
+    return (
+      <button>{props.text}</button>
+    )
+  }
+
+  function App() {
+    return (
+      <div>
+        <Btn text="Save Changes" />
+        <Btn text="Confirm" />
+      </div>
+    );
+  }
+  --> 부모(App)는 자식(Btn)에게 props는 `text="Save Changes"`를 보내주고, 자식(Btn)은 부모에게 props를 받아 원하는 곳에 삽입({props.text})
+  --> 자식쪽에서 `Btn({text})`로 선언하여 같은 인자로 받아서 사용도 가능하다.`<button>{text}</button>`
+
 
 * @Hook useEffect([함수], [{조건}]) : 조건에 맞을 경우에만 함수를 실행시켜주는 훅
 EX) 
@@ -114,12 +160,13 @@ URL 경로에 따라 다른 컴포넌트를 렌더링 할 수 있게 해줌.
  - Switch : `Route`에서 지정된 경로 접속 시 렌더링되는 컴포넌트
  - Route : 특정 경로와 일치할 때 렌더링할 컴포넌트를 정의하는 컴포넌트
  - Link : 클릭 시 특정 경로로 이동해주는 컴포넌트.
+ - useParams : Router에서 바로 변수를 넘겨 받는 Hook.
  EX) 
  function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/movie">
+        <Route path="/movie:id">
           <Detail />
         </Route>
         <Route path="/">
@@ -130,3 +177,4 @@ URL 경로에 따라 다른 컴포넌트를 렌더링 할 수 있게 해줌.
   );
 }
 --> Route 경로 중 "/movie"를 접속하면 컴포넌트가 Detail인 Switch를 렌더링하는 것.
+--> "/movie:id"를 넣으면 영화별 상세 페이지(GET 방식)를 고유값인 id로 구분하여 접속시킬 수 있다.

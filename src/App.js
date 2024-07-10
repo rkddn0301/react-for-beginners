@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import Movie from "./components/Movie";
+// 최상위 라우팅 컴포넌트
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Detail from "./routes/Detail";
 import Home from "./routes/Home";
@@ -11,7 +11,7 @@ function App() {
         <Route path="/hello">
           <h1>Hello</h1>
         </Route>
-        <Route path="/movie">
+        <Route path="/movie/:id">
           <Detail />
         </Route>
         <Route path="/">
