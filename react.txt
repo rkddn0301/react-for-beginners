@@ -3,6 +3,7 @@
 
 * PropTypes 설치 : npm i prop-types
 * React-Router 설치 : npm i react-router-dom
+* github upload packages 설치 : npm i gh-pages
 
 - React Hooks : 함수형 컴포넌트에서 상태 관리와 생명주기 메서드 등을 사용할 수 있게 해주는 함수들.
 EX) useEffect, useState 등

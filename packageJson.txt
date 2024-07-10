@@ -1,0 +1,13 @@
+
+* Scripts
+- npm run start : React 시작 스크립트
+- npm run build : 구현한 React 파일을 웹 브라우저에 인식할 수 있게 압축함
+++ scripts 중 `pre`가 들어가면 해당 script 이전에 실행하겠다는 의미임.
+EX) 
+"deploy": "gh-pages -d build"
+"predeploy" : "npm run build"
+--> `predeploy`를 먼저 실행하여 빌드를 하고, `deploy`를 하여 빌드 파일을 깃허브 페이지에 디렉토리 형식으로 넣겠다는 의미.
+
+- homepage : 배포되는 페이지 경로를 작성
+EX) 깃허브 배포 페이지
+"https://{github 아이디}.github.io/{repository}
