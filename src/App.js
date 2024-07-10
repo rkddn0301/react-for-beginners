@@ -1,12 +1,12 @@
 // 최상위 라우팅 컴포넌트
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import Detail from "./routes/Detail";
 import Home from "./routes/Home";
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route path="/hello">
           <h1>Hello</h1>
@@ -14,7 +14,7 @@ function App() {
         <Route path="/movie/:id">
           <Detail />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Home />
         </Route>
       </Switch>
