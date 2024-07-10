@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Movie from "../components/Movie";
+import styles from "./Home.module.css";
 
 function Detail() {
   const { id } = useParams(); // `:id`로 라우팅 했을 경우 해당 id 정보를 가져옴
@@ -16,6 +17,7 @@ function Detail() {
       await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
     ).json();
     setDetailMovies(json.data.movie);
+    console.log(json);
     setLoading(false);
   };
 
@@ -25,16 +27,17 @@ function Detail() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
       {loading ? (
-        <h1>Loading...</h1>
+        <h1 className={styles.loader}>Loading...</h1>
       ) : (
-        <div>
+        <div className={styles.movies}>
           <Movie
             id={detailMovies.id}
             medium_cover_image={detailMovies.medium_cover_image}
             title={detailMovies.title}
-            summary={detailMovies.summary}
+            year={detailMovies.year}
+            summary={detailMovies.description_full}
             genres={detailMovies.genres}
           />
         </div>
